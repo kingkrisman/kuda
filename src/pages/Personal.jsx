@@ -1,5 +1,5 @@
 import styled from "styled-components"
-import Hero from "../components/home/Hero"
+import Hero from "../components/Home/Hero"
 
 
 import Info from "../components/Home/Info"
@@ -13,7 +13,7 @@ import HeroTwo from "../components/Home/HeroTwo"
 const Personal = () => {
     return(
        <div>
-     <Hero />
+     <Hero/>
    <Info/>
    <Cards/>
    <Slides/>
