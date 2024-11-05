@@ -1,32 +1,48 @@
-import {useState} from 'react'
-import styled from 'styled-components'
+import React, { useEffect, useState } from 'react';
 
 const Business = () => {
-    const [myNum, setMyNum] = useState(2)
+  const [posts, setPosts] = useState([]);
+  const [loading, setLoading] = useState(true);
 
-    const increaseNum = () => {
-        setMyNum(myNum + 1)
-    }
+  useEffect(() => {
+    fetch('https://jsonplaceholder.typicode.com/posts')
+      .then((response) => response.json())
+      .then((data) => {
+        setPosts(data);
+        setLoading(false);
+      })
+      .catch((error) => {
+        console.error('Error fetching posts:', error);
+        setLoading(false);
+      });
+  }, []);
 
-    return(
+  return (
+    <div>
+      {loading ? (
         <div>
-            <br />
-            <br />
-            <br />
-            <h1>React Hooks</h1>
-            <hr />
-            <Holder>
-            <button>Subtract</button>
-            <h1> {myNum} </h1>
-            <button onClick={increaseNum}>Add</button>
-            </Holder>
+          <img
+            src="https://i.gifer.com/4V0b.gif" 
+            alt="Loading..."
+            style={{ width: '600px', height: '600px', marginLeft:'300px',marginBottom:'700px' }}
+          />
+          <p>Please Wait...</p>
         </div>
-    )
-}
+      ) : (
+        <div >
+          <h2 style={{textAlign:'center'}}>Blog Posts</h2>
+          <ul>
+            {posts.map((post) => (
+              <li style={{color:'purple'}} key={post.id}>
+                <h3 style={{color:'purple'}}>{post.title}</h3>
+                <p style={{color:'black'}}>{post.body}</p>
+              </li>
+            ))}
+          </ul>
+        </div>
+      )}
+    </div>
+  );
+};
 
-export default Business
-
-const Holder = styled.div`
-display: flex;
-justify-content: space-around;
-`
+export default Business;
